@@ -1,0 +1,13 @@
+[project]
+name = "pythonproject5"
+version = "0.1.0"
+description = "POD (Proper Orthogonal Decomposition) Analysis"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.21.0",
+    "matplotlib>=3.5.0",
+    "scikit-learn>=1.0.0",
+    "jupyter>=1.0.0",
+    "ipykernel>=6.0.0",
+    "scipy>=1.7.0",
+]
