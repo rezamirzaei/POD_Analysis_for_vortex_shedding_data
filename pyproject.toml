@@ -1,40 +1,167 @@
 [project]
-name = "pythonproject5"
-version = "0.1.0"
-description = "Production-grade POD analysis toolkit for Von Karman vortex street data"
+name = "pod-analysis"
+version = "1.0.0"
+description = "Production-grade toolkit for Proper Orthogonal Decomposition, DMD, and SPOD analysis"
 readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "POD Analysis Contributors"}
+]
+keywords = [
+    "pod",
+    "proper orthogonal decomposition",
+    "dmd",
+    "dynamic mode decomposition",
+    "spod",
+    "spectral pod",
+    "modal analysis",
+    "fluid dynamics",
+    "reduced order modeling",
+    "svd",
+    "data-driven",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Typing :: Typed",
+]
 requires-python = ">=3.9"
 dependencies = [
     "numpy>=1.21.0",
-    "matplotlib>=3.5.0",
     "scipy>=1.7.0",
-    "pytest>=8.4.2",
+    "matplotlib>=3.5.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+    "mypy>=1.0.0",
+    "ruff>=0.1.0",
+    "pre-commit>=3.0.0",
 ]
 notebook = [
     "jupyter>=1.0.0",
     "ipykernel>=6.0.0",
+    "ipywidgets>=8.0.0",
+]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "sphinx-autodoc-typehints>=1.25.0",
+    "myst-parser>=2.0.0",
+]
+hdf5 = [
+    "h5py>=3.0.0",
+]
+vtk = [
+    "vtk>=9.0.0",
+]
+all = [
+    "pod-analysis[dev,notebook,docs,hdf5]",
 ]
 
 [project.scripts]
 pod-analyze = "pod_analysis.cli:main"
 
+[project.urls]
+Homepage = "https://github.com/pod-analysis/pod-analysis"
+Documentation = "https://pod-analysis.readthedocs.io"
+Repository = "https://github.com/pod-analysis/pod-analysis"
+Issues = "https://github.com/pod-analysis/pod-analysis/issues"
+Changelog = "https://github.com/pod-analysis/pod-analysis/blob/main/CHANGELOG.md"
+
 [build-system]
-requires = [
-    "setuptools>=68.0.0",
-    "wheel",
-]
+requires = ["setuptools>=68.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-package-dir = { "" = "src" }
+package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+pod_analysis = ["py.typed"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks integration tests",
+]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+show_error_codes = true
+namespace_packages = true
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = [
+    "scipy.*",
+    "matplotlib.*",
+    "h5py.*",
+    "vtk.*",
+]
+ignore_missing_imports = true
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "D",   # pydocstyle
+    "SIM", # flake8-simplify
+    "RUF", # Ruff-specific rules
+]
+ignore = [
+    "D100",  # Missing docstring in public module
+    "D104",  # Missing docstring in public package
+    "D203",  # 1 blank line required before class docstring
+    "D213",  # Multi-line docstring summary should start at the second line
+]
+
+[tool.ruff.per-file-ignores]
+"tests/*" = ["D"]
+
+[tool.coverage.run]
+source = ["src/pod_analysis"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]

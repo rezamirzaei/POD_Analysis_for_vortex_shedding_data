@@ -1,2 +1,0 @@
-[console_scripts]
-pod-analyze = pod_analysis.cli:main
