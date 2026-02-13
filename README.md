@@ -1,0 +1,79 @@
+# POD Analysis Toolkit
+
+Production-ready Proper Orthogonal Decomposition (POD) workflow for Von Karman vortex street data (`VORTALL.mat`).
+
+## What this project now provides
+
+- Reusable POD model implementation (not just notebook code)
+- Robust `.mat` data loading and optional dataset download
+- Command-line pipeline for analysis, reporting, and plots
+- Automated tests for numerical correctness and utilities
+- Clear outputs for reproducible reduced-order modeling
+
+## Install
+
+```bash
+pip install -e .
+```
+
+For development tools:
+
+```bash
+pip install -e ".[dev]"
+```
+
+## Run analysis
+
+```bash
+pod-analyze --data vortex_data.mat --output-dir outputs
+```
+
+If the file is missing:
+
+```bash
+pod-analyze --download-if-missing --output-dir outputs
+```
+
+Useful options:
+
+- `--modes 12`: force exact mode count
+- `--energy-target 0.95`: auto-select mode count based on energy capture (default)
+- `--grid-shape NY NX`: override grid shape inference
+- `--snapshot-index 50`: choose snapshot for reconstruction plot
+- `--no-plots`: write summary JSON only
+
+## Outputs
+
+The CLI writes:
+
+- `outputs/summary.json`
+- `outputs/energy_spectrum.png`
+- `outputs/spatial_modes.png`
+- `outputs/reconstructions.png`
+- `outputs/temporal_coefficients.png`
+
+`summary.json` includes dataset metadata, selected mode count, reconstruction error, compression ratio, and dominant temporal frequencies.
+
+## Notebook (clean and minimal)
+
+`pod_analysis.ipynb` is now a thin, readable notebook that calls the package workflow instead of embedding long procedural code.  
+It demonstrates both:
+
+- Functional style via `run_analysis(config)`
+- Object-oriented access via `result.pod` and workflow/result objects
+
+## Library usage
+
+```python
+from pod_analysis import AnalysisConfig, run_analysis
+
+config = AnalysisConfig(data_path="vortex_data.mat", output_dir="outputs")
+result = run_analysis(config)
+print(result.selected_modes, result.summary["pod"]["reconstruction_rmse"])
+```
+
+## Run tests
+
+```bash
+PYTHONPATH=src pytest
+```

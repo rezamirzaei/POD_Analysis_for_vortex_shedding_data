@@ -1,0 +1,59 @@
+{
+  "dataset": {
+    "path": "vortex_data.mat",
+    "variable": "VORTALL",
+    "grid_shape": [
+      199,
+      449
+    ],
+    "n_spatial_points": 89351,
+    "n_snapshots": 151
+  },
+  "pod": {
+    "n_total_modes": 151,
+    "selected_modes": 5,
+    "selected_energy_percent": 95.42223196401247,
+    "reconstruction_rmse": 0.11760323414283849,
+    "reconstruction_relative_l2": 0.10519541393015444,
+    "mode_counts_for_energy": {
+      "90_percent": 4,
+      "95_percent": 5,
+      "99_percent": 7
+    },
+    "compression_ratio_selected": 25.13127420319226,
+    "top_energies_percent": [
+      41.34302867622434,
+      40.17153000021093,
+      5.34546737619087,
+      5.280421756757801,
+      3.281784154628536,
+      3.1446101891777176,
+      0.5229096056577424,
+      0.5165952532363962,
+      0.14597110931850862,
+      0.14500419469604947
+    ]
+  },
+  "spectral_peaks": [
+    {
+      "mode": 1,
+      "frequency": 0.033112582781456956,
+      "amplitude": 11276.744815874132
+    },
+    {
+      "mode": 2,
+      "frequency": 0.033112582781456956,
+      "amplitude": 11117.970148054406
+    },
+    {
+      "mode": 3,
+      "frequency": 0.06622516556291391,
+      "amplitude": 4055.045627996422
+    },
+    {
+      "mode": 4,
+      "frequency": 0.06622516556291391,
+      "amplitude": 4029.9803592283506
+    }
+  ]
+}
